@@ -1,4 +1,9 @@
 #!/bin/bash
+# Add this to allow load the variables form config json
+while IFS== read key value; do
+    printf -v "$key" "$value"
+done < <(jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' config.json)
+
 
 echo ""
 echo "============================================="
@@ -23,7 +28,7 @@ echo "---------------------------------------------"
 echo "File Path    : $file"
 echo "Folder Path  : $dir"
 echo "Integer      : $integer"
-echo "Float        : $float"
+echo "Number(float): $number"
 echo "String       : $string"
 echo "Boolean      : $boolean"
 echo "---------------------------------------------"
